@@ -3,6 +3,10 @@
 
 #define BUTTON_PIN 33
 
+void clicked();
+void double_clicked();
+void long_pressed();
+
 button_t button = {
     .pin = BUTTON_PIN,
     .debounce_ms = 50,
@@ -15,6 +19,17 @@ button_t button = {
 void IRAM_ATTR button_isr()
 {
   button_update(&button);
+}
+
+void setup()
+{
+  Serial.begin(115200);
+  button_init(&button, &button_isr);
+}
+
+void loop()
+{
+  delay(100);
 }
 
 void clicked()
@@ -30,15 +45,4 @@ void double_clicked()
 void long_pressed()
 {
   Serial.println("Long Pressed!");
-}
-
-void setup()
-{
-  Serial.begin(115200);
-  button_init(&button, &button_isr);
-}
-
-void loop()
-{
-  delay(100);
 }

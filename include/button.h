@@ -14,6 +14,14 @@ typedef enum
   RELEASE_DEBOUNCE_WAIT
 } button_state;
 
+typedef enum
+{
+    NONE,
+    CLICKED,
+    DOUBLE_CLICKED,
+    LONG_PRESSED
+} button_mode;
+
 typedef struct
 {
   // Public
@@ -24,6 +32,7 @@ typedef struct
   void (*click_fun)();
   void (*double_click_fun)();
   void (*long_press_fun)();
+  uint8_t mode;
   // Private
   button_state state;
   int8_t val;
@@ -33,7 +42,8 @@ typedef struct
   uint16_t long_press_timer;
 } button_t;
 
-void button_init(button_t *btn, void (*btn_isr)());
+void button_init(void (*btn_isr)());
+void button_add(button_t *btn);
 void button_update(button_t *btn);
 
 #endif

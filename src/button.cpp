@@ -61,6 +61,7 @@ void button_update(button_t *btn)
     // Check for debounce limit
     if (btn->long_press_timer > btn->long_press_ms)
     {
+      btn->mode = LONG_PRESSED;
       btn->long_press_fun();
 
       btn->state = RELEASE_WAIT;
@@ -86,6 +87,7 @@ void button_update(button_t *btn)
     // Check for debounce limit
     if (btn->double_click_timer > btn->double_click_ms)
     {
+      btn->mode = CLICKED;
       btn->click_fun();
 
       btn->state = IDLE;
@@ -102,6 +104,7 @@ void button_update(button_t *btn)
       if (btn->val == btn->last_val)
       {
 
+        btn->mode = DOUBLE_CLICKED;
         btn->double_click_fun();
         btn->state = RELEASE_WAIT;
       }
@@ -146,16 +149,19 @@ void button_update(button_t *btn)
   }
 }
 
-void button_init(button_t *btn, void (*btn_isr)())
+void button_init(void (*btn_isr)())
+{
+    // 1ms timer interrupt
+    btn_timer = timerBegin(0, 80, true);
+    timerAttachInterrupt(btn_timer, btn_isr, true);
+    timerAlarmWrite(btn_timer, 1000, true);
+    timerAlarmEnable(btn_timer);
+}
+
+void button_add(button_t *btn)
 {
   pinMode(btn->pin, INPUT);
 
   btn->state = IDLE;
   btn->last_val = digitalRead(btn->pin);
-
-  // 1ms timer interrupt
-  btn_timer = timerBegin(0, 80, true);
-  timerAttachInterrupt(btn_timer, btn_isr, true);
-  timerAlarmWrite(btn_timer, 1000, true);
-  timerAlarmEnable(btn_timer);
 }

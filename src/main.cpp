@@ -17,8 +17,6 @@ void long_pressed()
 
 #define BUTTON_PIN 33
 
-#define BUTTON_CLICK_DELAY 100
-
 hw_timer_t *btn_timer = NULL;
 
 typedef enum
@@ -36,7 +34,6 @@ typedef struct
 {
   // Public
   uint8_t pin;
-  bool pull_up_down;
   uint16_t debounce_ms;
   uint16_t double_click_ms;
   uint16_t long_press_ms;
@@ -54,9 +51,8 @@ typedef struct
 
 button_t button = {
     .pin = BUTTON_PIN,
-    .pull_up_down = true,
     .debounce_ms = 50,
-    .double_click_ms = 200,
+    .double_click_ms = 400,
     .long_press_ms = 2000,
     .click_fun = &clicked,
     .double_click_fun = &double_clicked,
@@ -76,8 +72,6 @@ void button_update(button_t *btn)
       btn->last_val = btn->val;
 
       btn->debounce_timer = 0;
-
-      // Serial.println("Debounce Wait");
 
       btn->state = DEBOUNCE_WAIT;
     }

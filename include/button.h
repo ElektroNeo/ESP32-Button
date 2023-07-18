@@ -16,10 +16,10 @@ typedef enum
 
 typedef enum
 {
-    NONE,
-    CLICKED,
-    DOUBLE_CLICKED,
-    LONG_PRESSED
+  NONE,
+  CLICKED,
+  DOUBLE_CLICKED,
+  LONG_PRESSED
 } button_mode;
 
 typedef struct

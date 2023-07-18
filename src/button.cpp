@@ -151,11 +151,11 @@ void button_update(button_t *btn)
 
 void button_init(void (*btn_isr)())
 {
-    // 1ms timer interrupt
-    btn_timer = timerBegin(0, 80, true);
-    timerAttachInterrupt(btn_timer, btn_isr, true);
-    timerAlarmWrite(btn_timer, 1000, true);
-    timerAlarmEnable(btn_timer);
+  // 1ms timer interrupt
+  btn_timer = timerBegin(0, 80, true);
+  timerAttachInterrupt(btn_timer, btn_isr, true);
+  timerAlarmWrite(btn_timer, 1000, true);
+  timerAlarmEnable(btn_timer);
 }
 
 void button_add(button_t *btn)

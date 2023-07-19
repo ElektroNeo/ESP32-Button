@@ -2,6 +2,8 @@
 
 hw_timer_t *btn_timer = NULL;
 
+//button_t *button_arr [];
+
 void button_update(button_t *btn)
 {
   // Check button state
@@ -168,6 +170,8 @@ void button_add(button_t *btn)
 
 void button_add_default(button_t *btn, uint8_t pin)
 {
+  button_add(btn);
+  
   btn->pin = pin;
   btn->debounce_ms = 50;
   btn->double_click_ms = 400;

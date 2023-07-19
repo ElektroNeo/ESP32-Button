@@ -9,19 +9,11 @@ void double_clicked();
 void long_pressed();
 
 button_t button = {
-    .pin = BUTTON_PIN,
-    .debounce_ms = 50,
-    .double_click_ms = 400,
-    .long_press_ms = 2000,
     .click_fun = &clicked,
     .double_click_fun = &double_clicked,
     .long_press_fun = &long_pressed};
 
 button_t button_small = {
-    .pin = BUTTON_SMALL_PIN,
-    .debounce_ms = 50,
-    .double_click_ms = 400,
-    .long_press_ms = 2000,
     .click_fun = &clicked,
     .double_click_fun = &double_clicked,
     .long_press_fun = &long_pressed};
@@ -36,8 +28,8 @@ void setup()
 {
   Serial.begin(115200);
 
-  button_add(&button);
-  button_add(&button_small);
+  button_add_default(&button, BUTTON_PIN);
+  button_add_default(&button_small, BUTTON_SMALL_PIN);
 
   button_init(&button_isr);
 }

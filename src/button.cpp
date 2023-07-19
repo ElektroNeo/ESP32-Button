@@ -64,7 +64,10 @@ void button_update(button_t *btn)
     if (btn->long_press_timer > btn->long_press_ms)
     {
       btn->mode = LONG_PRESSED;
-      btn->long_press_fun();
+      if (btn->long_press_fun != NULL)
+      {
+        btn->long_press_fun();
+      }
 
       btn->state = RELEASE_WAIT;
     }
@@ -90,7 +93,10 @@ void button_update(button_t *btn)
     if (btn->double_click_timer > btn->double_click_ms)
     {
       btn->mode = CLICKED;
-      btn->click_fun();
+      if (btn->click_fun != NULL)
+      {
+        btn->click_fun();
+      }
 
       btn->state = IDLE;
     }
@@ -107,7 +113,12 @@ void button_update(button_t *btn)
       {
 
         btn->mode = DOUBLE_CLICKED;
-        btn->double_click_fun();
+
+        if (btn->double_click_fun != NULL)
+        {
+          btn->double_click_fun();
+        }
+
         btn->state = RELEASE_WAIT;
       }
       else
@@ -123,7 +134,6 @@ void button_update(button_t *btn)
     // Check for release
     if (btn->val != btn->last_val)
     {
-
       // Update last value
       btn->last_val = btn->val;
 

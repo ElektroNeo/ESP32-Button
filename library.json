@@ -1,6 +1,6 @@
 {
   "name": "ESP32-Buton",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Button library for ESP32 with click, double click and long press functionalities.",
   "keywords": "button, esp32, click, double click, long press",
   "repository":

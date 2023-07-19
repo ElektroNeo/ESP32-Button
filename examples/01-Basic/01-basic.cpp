@@ -1,35 +1,35 @@
 #include <Arduino.h>
 #include "button.h"
 
-#define BUTTON_PIN 33
-#define BUTTON_SMALL_PIN 32
+#define BUTTON_1_PIN 33
+#define BUTTON_2_PIN 32
 
 void clicked();
 void double_clicked();
 void long_pressed();
 
-button_t button = {
+button_t button_1 = {
     .click_fun = &clicked,
     .double_click_fun = &double_clicked,
     .long_press_fun = &long_pressed};
 
-button_t button_small = {
+button_t button_2 = {
     .click_fun = &clicked,
     .double_click_fun = &double_clicked,
     .long_press_fun = &long_pressed};
 
 void IRAM_ATTR button_isr()
 {
-  button_update(&button);
-  button_update(&button_small);
+  button_update(&button_1);
+  button_update(&button_2);
 }
 
 void setup()
 {
   Serial.begin(115200);
 
-  button_add_default(&button, BUTTON_PIN);
-  button_add_default(&button_small, BUTTON_SMALL_PIN);
+  button_add_default(&button_1, BUTTON_1_PIN);
+  button_add_default(&button_2, BUTTON_2_PIN);
 
   button_init(&button_isr);
 }
@@ -41,42 +41,42 @@ void loop()
 
 void clicked()
 {
-  if (button.mode == CLICKED)
+  if (button_1.mode == CLICKED)
   {
     Serial.println("Clicked 1!");
-    button.mode = NONE;
+    button_1.mode = NONE;
   }
-  if (button_small.mode == CLICKED)
+  if (button_2.mode == CLICKED)
   {
     Serial.println("Clicked 2!");
-    button_small.mode = NONE;
+    button_2.mode = NONE;
   }
 }
 
 void double_clicked()
 {
-  if (button.mode == DOUBLE_CLICKED)
+  if (button_1.mode == DOUBLE_CLICKED)
   {
     Serial.println("Double Clicked 1!");
-    button.mode = NONE;
+    button_1.mode = NONE;
   }
-  if (button_small.mode == DOUBLE_CLICKED)
+  if (button_2.mode == DOUBLE_CLICKED)
   {
     Serial.println("Double Clicked 2!");
-    button_small.mode = NONE;
+    button_2.mode = NONE;
   }
 }
 
 void long_pressed()
 {
-  if (button.mode == LONG_PRESSED)
+  if (button_1.mode == LONG_PRESSED)
   {
     Serial.println("Long Pressed 1!");
-    button.mode = NONE;
+    button_1.mode = NONE;
   }
-  if (button_small.mode == LONG_PRESSED)
+  if (button_2.mode == LONG_PRESSED)
   {
     Serial.println("Long Pressed 2!");
-    button_small.mode = NONE;
+    button_2.mode = NONE;
   }
 }

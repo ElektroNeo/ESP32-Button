@@ -4,19 +4,8 @@
 #define BUTTON_1_PIN 33
 #define BUTTON_2_PIN 32
 
-void clicked();
-void double_clicked();
-void long_pressed();
-
-button_t button_1 = {
-    .click_fun = &clicked,
-    .double_click_fun = &double_clicked,
-    .long_press_fun = &long_pressed};
-
-button_t button_2 = {
-    .click_fun = &clicked,
-    .double_click_fun = &double_clicked,
-    .long_press_fun = &long_pressed};
+button_t button_1;
+button_t button_2;
 
 void IRAM_ATTR button_isr()
 {
@@ -36,47 +25,17 @@ void setup()
 
 void loop()
 {
+  if (button_1.mode || button_2.mode)
+  {
+    // Print modes: 1- Clicked, 2- Double Clicked 3- Long Pressed
+    Serial.print(button_2.mode);
+    Serial.print(" - ");
+    Serial.println(button_1.mode);
+
+    // Reset modes
+    button_1.mode = NONE;
+    button_2.mode = NONE;
+  }
+  
   delay(100);
-}
-
-void clicked()
-{
-  if (button_1.mode == CLICKED)
-  {
-    Serial.println("Clicked 1!");
-    button_1.mode = NONE;
-  }
-  if (button_2.mode == CLICKED)
-  {
-    Serial.println("Clicked 2!");
-    button_2.mode = NONE;
-  }
-}
-
-void double_clicked()
-{
-  if (button_1.mode == DOUBLE_CLICKED)
-  {
-    Serial.println("Double Clicked 1!");
-    button_1.mode = NONE;
-  }
-  if (button_2.mode == DOUBLE_CLICKED)
-  {
-    Serial.println("Double Clicked 2!");
-    button_2.mode = NONE;
-  }
-}
-
-void long_pressed()
-{
-  if (button_1.mode == LONG_PRESSED)
-  {
-    Serial.println("Long Pressed 1!");
-    button_1.mode = NONE;
-  }
-  if (button_2.mode == LONG_PRESSED)
-  {
-    Serial.println("Long Pressed 2!");
-    button_2.mode = NONE;
-  }
 }

@@ -170,13 +170,10 @@ void button_add(button_t *btn)
 
 void button_add_default(button_t *btn, uint8_t pin)
 {
-  button_add(btn);
-  
   btn->pin = pin;
   btn->debounce_ms = 50;
   btn->double_click_ms = 400;
   btn->long_press_ms = 2000;
-  btn->click_fun = NULL;
-  btn->double_click_fun = NULL;
-  btn->long_press_fun = NULL;
+
+  button_add(btn);
 }

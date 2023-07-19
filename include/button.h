@@ -44,6 +44,7 @@ typedef struct
 
 void button_init(void (*btn_isr)());
 void button_add(button_t *btn);
+void button_add_default(button_t *btn, uint8_t pin);
 void button_update(button_t *btn);
 
 #endif
